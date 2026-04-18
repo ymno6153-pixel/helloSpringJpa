@@ -37,7 +37,7 @@ public class CategoryRepository {
         return result.isEmpty() ? Optional.empty() : Optional.of(result.get(0));
     }
 
-    // JOIN FETCH: N+1 문제 방지 (Category + Products 한 번에 로드)
+        // JOIN FETCH: N+1 문제 방지 (Category + Products 한 번에 로드)
     public Optional<Category> findByIdWithProducts(Long id) {
         List<Category> result = em.createQuery(
                         "SELECT DISTINCT c FROM Category c JOIN FETCH c.products WHERE c.id = :id",
@@ -46,5 +46,20 @@ public class CategoryRepository {
                 .getResultList();
         return result.isEmpty() ? Optional.empty() : Optional.of(result.get(0));
     }
+
+    // 해당 카테고리에 연결된 상품 수 세기
+    public long countProductsByCategoryId(Long categoryId) {
+        return em.createQuery(
+                        "SELECT COUNT(p) FROM Product p WHERE p.category.id = :id", Long.class)
+                .setParameter("id", categoryId)
+                .getSingleResult();
+    }
+
+    // 카테고리 삭제
+    public void delete(Long id) {
+        Category c = em.find(Category.class, id);
+        if (c != null) em.remove(c);
+    }
+
 }
 
