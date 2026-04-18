@@ -135,7 +135,7 @@ public class ProductRepository {
     // 상품 키워드 검색
     public List<Product> findByNameContaining(String keyword) {
         return entityManager.createQuery(
-                        "SELECT p FROM Product p WHERE p.name LIKE :keyword", Product.class)
+                        "SELECT p FROM Product p LEFT JOIN FETCH p.category WHERE p.name LIKE :keyword", Product.class)
                 .setParameter("keyword", "%" + keyword + "%")
                 .getResultList();
     }
@@ -143,7 +143,7 @@ public class ProductRepository {
     // 카테고리 ID로 필터
     public List<Product> findByCategoryId(Long categoryId) {
         return entityManager.createQuery(
-                        "SELECT p FROM Product p WHERE p.category.id = :cid", Product.class)
+                        "SELECT p FROM Product p LEFT JOIN FETCH p.category WHERE p.category.id = :cid", Product.class)
                 .setParameter("cid", categoryId)
                 .getResultList();
     }

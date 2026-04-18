@@ -138,5 +138,9 @@
         </tbody>
     </table>
 
+    <footer style="margin-top: 30px; border-top: 1px solid #ccc; padding: 10px; font-size: 13px; color: #555;">
+        <p th:text="${'실습 수행 일시: ' + #temporals.format(#temporals.createNow(), 'yyyy년 MM월 dd일 HH:mm:ss') + ' | 학번: 2271520 | 성명: 노영민'}"></p>
+    </footer>
+
 </body>
 </html>
