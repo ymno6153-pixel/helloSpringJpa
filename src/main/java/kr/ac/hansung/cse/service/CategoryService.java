@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
+// 카테고리 비즈니스 로직 : 중복 방지, 삭제 시 연결 상품 예외 처리
+
 @Service
 @Transactional(readOnly = true)
 public class CategoryService {
